@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:sch="http://schemas.soapws.com/test/ws/soapws" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://schemas.soapws.com/test/ws/soapws/definitions" 
+	targetNamespace="http://schemas.soapws.com/test/ws/soapws/definitions" 
+	xmlns:p="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+				   targetNamespace="http://schemas.soapws.com/test/ws/soapws" 
+				   xmlns:tns="http://schemas.soapws.com/test/ws/soapws"
+				   elementFormDefault="qualified">
+			
+			<xs:element name="params" type="tns:params" />
+			
+			<xs:element name="requestToPDF" type="tns:requestToPDF" />
+			<xs:element name="responseToPDF" type="tns:responseToPDF" />
+			
+			<xs:element name="requestForPrint" type="tns:requestForPrint" />
+			<xs:element name="responseForPrint" type="tns:responseForPrint" />
+			
+			<xs:element name="requestForDB" type="tns:requestForDB" />
+			<xs:element name="responseForDB" type="tns:responseForDB" />
+			
+			<xs:complexType name="params">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="key" type="xs:string"/>
+					<xs:element minOccurs="0" name="code" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="requestToPDF">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="name" type="xs:string"/>
+					<xs:element minOccurs="1" name="lastname" type="xs:string"/>
+					<xs:element minOccurs="1" name="email" type="xs:string"/>
+					<xs:element minOccurs="0" name="status" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="paramFields" type="tns:params"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="responseToPDF">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="success" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="id" type="xs:string"/>
+					<xs:element minOccurs="0" name="message" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="paramFields" type="tns:params"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="requestForPrint">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="success" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" name="lastname" type="xs:string"/>
+					<xs:element minOccurs="0" name="email" type="xs:string"/>
+					<xs:element minOccurs="0" name="status" type="xs:string"/>
+					<xs:element minOccurs="0" name="message" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="paramFields" type="tns:params"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="responseForPrint">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="success" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="message" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="paramFields" type="tns:params"/>
+				</xs:sequence>
+			</xs:complexType>
+			
+			<xs:complexType name="requestForDB">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="id" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="paramFields" type="tns:params"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="responseForDB">
+				<xs:sequence>
+					<xs:element minOccurs="1" name="success" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="name" type="xs:string"/>
+					<xs:element minOccurs="0" name="lastname" type="xs:string"/>
+					<xs:element minOccurs="0" name="email" type="xs:string"/>
+					<xs:element minOccurs="0" name="status" type="xs:string"/>
+					<xs:element minOccurs="0" name="message" type="xs:string"/>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="paramFields" type="tns:params"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>	
+    </wsdl:types>
+	
+	<wsdl:message name="requestToPDF">
+		<wsdl:part element="sch:requestToPDF" name="requestToPDF"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="responseToPDF">
+		<wsdl:part element="sch:responseToPDF" name="responseToPDF"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="requestForPrint">
+		<wsdl:part element="sch:requestForPrint" name="requestForPrint"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="responseForPrint">
+		<wsdl:part element="sch:responseForPrint" name="responseForPrint"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="requestForDB">
+		<wsdl:part element="sch:requestForDB" name="requestForDB"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="responseForDB">
+		<wsdl:part element="sch:responseForDB" name="responseForDB"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:portType name="soapPort">
+		<wsdl:operation name="pdf">
+			<wsdl:input message="tns:requestToPDF" name="requestToPDF"></wsdl:input>
+			<wsdl:output message="tns:responseToPDF" name="responseToPDF"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="print">
+			<wsdl:input message="tns:requestForPrint" name="requestForPrint"></wsdl:input>
+			<wsdl:output message="tns:responseForPrint" name="responseForPrint"></wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="database">
+			<wsdl:input message="tns:requestForDB" name="requestForDB"></wsdl:input>
+			<wsdl:output message="tns:responseForDB" name="responseForDB"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="soapPortSoap" type="tns:soapPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		
+		<wsdl:operation name="pdf">
+			<soap:operation soapAction="" />
+			<wsdl:input>
+				<soap:body parts="requestToPDF" use="literal" />
+			</wsdl:input>
+			<wsdl:output name="responseToPDF">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="print">
+			<soap:operation soapAction="" />
+			<wsdl:input>
+				<soap:body parts="requestForPrint" use="literal" />
+			</wsdl:input> 
+			<wsdl:output name="responseForPrint">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="database">
+			<soap:operation soapAction="" />
+			<wsdl:input>
+				<soap:body parts="requestForDB" use="literal" />
+			</wsdl:input>
+			<wsdl:output name="responseForDB">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="soapPortService">
+		<wsdl:port binding="tns:soapPortSoap" name="soapPortSoap">
+			<soap:address location="http://nn.nnn.nn.n:pppp/abc/d/efg/h/soapws-client/" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

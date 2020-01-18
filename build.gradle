@@ -1,0 +1,55 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'com.springboot.soap.ws'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+/*
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+*/
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.10'
+    implementation 'wsdl4j:wsdl4j:1.6.3'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+    implementation('com.sun.xml.messaging.saaj:saaj-impl:1.5.1') {
+        force = true
+    }
+//    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'com.google.code.gson:gson:2.8.6'
+//    compile files('libs/oracle-jdbc-12.1.0.1.jar')
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.postgresql:postgresql'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}
