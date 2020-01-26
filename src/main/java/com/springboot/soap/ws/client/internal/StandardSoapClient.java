@@ -22,7 +22,7 @@ public class StandardSoapClient implements SoapClient {
         ResponseToPDF responseToPDF = new ResponseToPDF();
         try {
 //            responseToPDF = (ResponseToPDF) gateway.sendAndReceive(requestToPDF);
-            System.out.println("        firstRequest - client");
+//            1234
             responseToPDF.setMessage("firstRequest - poruka iz Clienta");
             return responseToPDF.getMessage();
         } catch (RuntimeException re) {
