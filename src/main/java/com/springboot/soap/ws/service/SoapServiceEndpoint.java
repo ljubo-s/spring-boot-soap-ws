@@ -1,17 +1,18 @@
 package com.springboot.soap.ws.service;
 
+import com.springboot.soap.ws.service.internal.FirstRequest;
+import com.springboot.soap.ws.service.internal.FirstResponse;
+import com.springboot.soap.ws.service.internal.SecondRequest;
+import com.springboot.soap.ws.service.internal.SecondResponse;
+import com.springboot.soap.ws.service.internal.ThirdRequest;
+import com.springboot.soap.ws.service.internal.ThirdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
-import com.springboot.soap.ws.service.internal.FirstRequest;
-import com.springboot.soap.ws.service.internal.FirstResponse;
 import com.springboot.soap.ws.service.internal.PersonObjectService;
-import com.springboot.soap.ws.service.internal.SecondRequest;
-import com.springboot.soap.ws.service.internal.SecondResponse;
-import com.springboot.soap.ws.service.internal.ThirdRequest;
-import com.springboot.soap.ws.service.internal.ThirdResponse;
+
 import static com.springboot.soap.ws.service.SoapServiceFault.*;
 
 /**
@@ -19,7 +20,6 @@ import static com.springboot.soap.ws.service.SoapServiceFault.*;
  * @author Ljubomir Stijepovic
  *
  */
-
 @Endpoint
 public class SoapServiceEndpoint {
 
@@ -27,13 +27,13 @@ public class SoapServiceEndpoint {
 
     private SoapService service;
     private SoapServiceLogger loger;
-    
+
     @Autowired
     public SoapServiceEndpoint(SoapServiceLogger loger, SoapService service) {
         this.loger = loger;
         this.service = service;
     }
-    
+
     @PayloadRoot(localPart = "firstRequest", namespace = SOAP_WS_NAMESPACE_URI)
     @ResponsePayload
     public FirstResponse handleFirstRequest(@RequestPayload FirstRequest request) throws Exception {
@@ -42,35 +42,26 @@ public class SoapServiceEndpoint {
         PersonObjectService person = new PersonObjectService();
 
         try {
-            System.out.println(" first endpoint 1");
 
             person.setName(request.getName());
             person.setLastname(request.getLastname());
             person.setEmail(request.getEmail());
             person.setStatus(Integer.parseInt(request.getStatus()));
 
-//            String result = service.firstRequest(person);
+            String result = service.firstRequest(person);
 
-            String result = "";
-            
-            System.out.println(" first endpoint 3");
             response.setSuccess(true);
-//            response.setId(person.getId().toString());
             response.setMessage(result);
-/**
- * testiranje fault i request
- */
-            System.out.println(" first endpoint 3.1");
-            loger.logResponse("firstRequest", request, response);
-            System.out.println(" first endpoint 4");
+
+            loger.logResponse("handleFirstRequest", request, response);
+
             return response;
-        } catch (RuntimeException re) {
-            System.out.println(" first endpoint 5 error");
-            SoapServiceException fault = new SoapServiceException(CANNOT_REQUEST_TO_PDF);
-            loger.logFault("firstRequest", request, fault, re);
+        } catch (RuntimeException runtimeException) {
+//          response.setSuccess(false);
+//          return response;
+            SoapServiceException fault = new SoapServiceException(ERROR_ON_FIRST_REQUEST);
+            loger.logFault("handleFirstRequest", request, fault, runtimeException);
             throw fault;
-//            response.setSuccess(false);
-//            return response;
         }
     }
 
@@ -88,9 +79,10 @@ public class SoapServiceEndpoint {
             response.setEmail(person.getEmail());
             response.setMessage(result);
             return response;
-        } catch (RuntimeException re) {
-            response.setSuccess(false);
-            return response;
+        } catch (RuntimeException runtimeException) {
+            SoapServiceException fault = new SoapServiceException(ERROR_ON_FIRST_REQUEST);
+            loger.logFault("handleSecondRequest", request, fault, runtimeException);
+            throw fault;
         }
     }
 
@@ -108,9 +100,10 @@ public class SoapServiceEndpoint {
             response.setEmail(person.getEmail());
             response.setName(result);
             return response;
-        } catch (RuntimeException re) {
-            response.setSuccess(false);
-            return response;
+        } catch (RuntimeException runtimeException) {
+            SoapServiceException fault = new SoapServiceException(ERROR_ON_FIRST_REQUEST);
+            loger.logFault("handleThirdRequest", request, fault, runtimeException);
+            throw fault;
         }
     }
 

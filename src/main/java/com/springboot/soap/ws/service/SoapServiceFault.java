@@ -2,8 +2,10 @@ package com.springboot.soap.ws.service;
 
 public enum SoapServiceFault {
 
-    SERVICE_ERROR("Soap-00001", "Service error"),
-    CANNOT_REQUEST_TO_PDF("Soap-00002", "Cannot send request to pdf");
+    SERVICE_ERROR("SOAP-00001", "Service Error"),
+    ERROR_ON_FIRST_REQUEST("SOAP-00002", "Cannot execute First request on Service layer"),
+    ERROR_ON_SECOND_REQUEST("SOAP-00003", "Cannot execute Second request on Service layer"),
+    ERROR_ON_THIRD_REQUEST("SOAP-00004", "Cannot execute Third request on Service layer"),;
 
     private String code;
     private String message;

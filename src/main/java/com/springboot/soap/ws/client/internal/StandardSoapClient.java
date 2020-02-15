@@ -1,8 +1,8 @@
 package com.springboot.soap.ws.client.internal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.springboot.soap.ws.client.SoapClient;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
 public class StandardSoapClient implements SoapClient {
@@ -13,6 +13,8 @@ public class StandardSoapClient implements SoapClient {
     @Override
     public String firstRequest(PersonObjectClient person) {
 
+        System.out.println("      Client firstRequest");
+
         RequestToPDF requestToPDF = new RequestToPDF();
         requestToPDF.setName(person.getName());
         requestToPDF.setLastname(person.getLastname());
@@ -21,9 +23,8 @@ public class StandardSoapClient implements SoapClient {
 
         ResponseToPDF responseToPDF = new ResponseToPDF();
         try {
-//            responseToPDF = (ResponseToPDF) gateway.sendAndReceive(requestToPDF);
-//            1234
-            responseToPDF.setMessage("firstRequest - poruka iz Clienta");
+            responseToPDF = (ResponseToPDF) gateway.sendAndReceive(requestToPDF);
+            responseToPDF.setMessage("      Client firstRequest try");
             return responseToPDF.getMessage();
         } catch (RuntimeException re) {
             return responseToPDF.getMessage();
@@ -32,6 +33,7 @@ public class StandardSoapClient implements SoapClient {
 
     @Override
     public String secondRequest(PersonObjectClient person) {
+        System.out.println("      Client secondtRequest");
 
         RequestForPrint requestForPrint = new RequestForPrint();
         requestForPrint.setName(person.getName());
@@ -42,8 +44,8 @@ public class StandardSoapClient implements SoapClient {
         ResponseForPrint responseForPrint = new ResponseForPrint();
         try {
             responseForPrint = (ResponseForPrint) gateway.sendAndReceive(requestForPrint);
-            System.out.println("        secondRequest - client");
-            responseForPrint.setMessage("secondRequest - poruka iz Clienta");
+            System.out.println("      Client secondtRequest try");
+            responseForPrint.setMessage("        Client secondtRequest");
             return responseForPrint.getMessage();
         } catch (RuntimeException re) {
             return responseForPrint.getMessage();
@@ -52,6 +54,7 @@ public class StandardSoapClient implements SoapClient {
 
     @Override
     public String thirdRequest(PersonObjectClient person) {
+        System.out.println("      Client thirdRequest");
 
         RequestForDB requestForDB = new RequestForDB();
         requestForDB.setId(person.getId().toString());
@@ -59,8 +62,8 @@ public class StandardSoapClient implements SoapClient {
         ResponseForDB responseForDB = new ResponseForDB();
         try {
             responseForDB = (ResponseForDB) gateway.sendAndReceive(requestForDB);
-            System.out.println("        thirdRequest - client");
-            responseForDB.setMessage("thirdRequest - poruka iz Clienta");
+            System.out.println("      Client thirdRequest try");
+            responseForDB.setMessage("      Client thirdRequest");
             return responseForDB.getMessage();
         } catch (RuntimeException re) {
             return responseForDB.getMessage();

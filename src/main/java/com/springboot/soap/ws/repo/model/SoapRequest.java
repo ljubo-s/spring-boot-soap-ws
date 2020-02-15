@@ -17,7 +17,7 @@ public class SoapRequest {
     private BigInteger id;
     private String requestData;
     private String responseData;
-    private String function;
+    private String methodName;
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date activityDate;
 
@@ -59,13 +59,13 @@ public class SoapRequest {
         this.activityDate = activityDate;
     }
 
-    @Column(name = "function")
-    public String getFunction() {
-        return function;
+    @Column(name = "method_name")
+    public String getMethodName() {
+        return methodName;
     }
 
-    public void setFunction(String function) {
-        this.function = function;
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
     }
 
 }

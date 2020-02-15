@@ -16,56 +16,47 @@ import com.springboot.soap.ws.repo.service.SoapRequestService;
 public class SoapServiceLogger {
 
     public static final int REQ_MAX_LENGTH = 1000;
-    public static final int TRACE_MAX_LENGTH = 3000;
+    public static final int TRACE_MAX_LENGTH = 4000;
     private Gson gson;
 
     @Autowired
-    SoapFaultService soapFaultService;
+    private SoapFaultService soapFaultService;
     @Autowired
-    SoapRequestService soapRequestService;
-    
+    private SoapRequestService soapRequestService;
+
     @Autowired
     public SoapServiceLogger(SoapFaultRepository repository) {
         this.gson = new GsonBuilder().create();
     }
 
-    public void logResponse(String funkcija, Object request, Object response) {
-        System.out.println(" logResponse 1");
+    public void logResponse(String methodName, Object request, Object response) {
         Date inTime = new Date(System.currentTimeMillis());
-        System.out.println(" logResponse 1.1");
-        String reqJSON = gson.toJson(request);
-        System.out.println(" logResponse 1.2");
-        reqJSON = trim(reqJSON, REQ_MAX_LENGTH);
-        System.out.println(" logResponse 1.3");
-        String resJSON = gson.toJson(response);
-        System.out.println(" logResponse 2");
+        String requestJSON = gson.toJson(request);
+        requestJSON = trim(requestJSON, REQ_MAX_LENGTH);
+        String responseJSON = gson.toJson(response);
+
         SoapRequest soapRequest = new SoapRequest();
-        System.out.println(" logResponse 3");
-        soapRequest.setFunction(funkcija);
-        System.out.println(" logResponse 4");
-        soapRequest.setRequestData(reqJSON);
-        System.out.println(" logResponse 5");
-        soapRequest.setResponseData(resJSON);
-        System.out.println(" logResponse 6");
+        soapRequest.setMethodName(methodName);
+        soapRequest.setRequestData(requestJSON);
+        soapRequest.setResponseData(responseJSON);
         soapRequest.setActivityDate(inTime);
-        System.out.println(" logResponse 2");
+
         soapRequestService.saveOrUpdate(soapRequest);
     }
 
-    public void logFault(String funkcija, Object request, SoapServiceException fault, Throwable re) {
+    public void logFault(String methodName, Object request, SoapServiceException fault, Throwable re) {
         Date inTime = new Date(System.currentTimeMillis());
-        String req = gson.toJson(request);
-        req = trim(req, REQ_MAX_LENGTH);
+        String requestJSON = gson.toJson(request);
+        requestJSON = trim(requestJSON, REQ_MAX_LENGTH);
         String trace = traceAsString(fault, re);
         trace = trim(trace, TRACE_MAX_LENGTH);
 
         SoapFault soapFaults = new SoapFault();
-
         soapFaults.setFaultCode(fault.getCode());
         soapFaults.setFaultMessage(fault.getMessage());
         soapFaults.setTraceData(trace);
         soapFaults.setLogDate(inTime);
-        System.out.println(" logFault");
+
         soapFaultService.saveOrUpdate(soapFaults);
     }
 

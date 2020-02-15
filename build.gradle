@@ -33,9 +33,7 @@ dependencies {
     implementation('com.sun.xml.messaging.saaj:saaj-impl:1.5.1') {
         force = true
     }
-//    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'com.google.code.gson:gson:2.8.6'
-//    compile files('libs/oracle-jdbc-12.1.0.1.jar')
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

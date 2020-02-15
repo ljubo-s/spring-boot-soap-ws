@@ -1,10 +1,10 @@
 package com.springboot.soap.ws.service.internal;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.springboot.soap.ws.client.SoapClient;
 import com.springboot.soap.ws.service.SoapService;
 import com.springboot.soap.ws.client.internal.PersonObjectClient;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class StandardSoapService implements SoapService {
@@ -13,7 +13,7 @@ public class StandardSoapService implements SoapService {
     private SoapClient soapClient;
 
     public String firstRequest(PersonObjectService person) {
-        System.out.println("    firstRequest service");
+        System.out.println("    Service firstRequest");
         PersonObjectClient personClient = new PersonObjectClient();
         personClient.setName(person.getName());
         personClient.setLastname(person.getLastname());
@@ -24,7 +24,7 @@ public class StandardSoapService implements SoapService {
     }
 
     public String secondRequest(PersonObjectService person) {
-        System.out.println(" secondRequest service");
+        System.out.println("    Service secondRequest");
         PersonObjectClient personClient = new PersonObjectClient();
         personClient.setName(person.getName());
         personClient.setLastname(person.getLastname());
@@ -35,7 +35,7 @@ public class StandardSoapService implements SoapService {
     }
 
     public String thirdRequest(PersonObjectService person) {
-        System.out.println(" thirdRequest service");
+        System.out.println("    Service thirdRequest");
         PersonObjectClient personClient = new PersonObjectClient();
         personClient.setName(person.getName());
         personClient.setLastname(person.getLastname());

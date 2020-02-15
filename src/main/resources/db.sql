@@ -1,6 +1,4 @@
-
 --drop database db_soap;
-
 /*
 drop table soapfault;
 drop table soaprequest;
@@ -12,7 +10,7 @@ CREATE TABLE soaprequest
   id serial NOT NULL,
   request_data character varying(1000),
   response_data character varying(1000),
-  function character varying(150),
+  method_name character varying(150),
   activity_date timestamp without time zone,
   CONSTRAINT soaprequest_pkey PRIMARY KEY (id)
 );
