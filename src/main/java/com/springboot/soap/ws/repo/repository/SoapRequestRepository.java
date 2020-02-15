@@ -5,5 +5,4 @@ import com.springboot.soap.ws.repo.model.SoapRequest;
 
 public interface SoapRequestRepository  extends CrudRepository<SoapRequest, Long> {
 
-
 }

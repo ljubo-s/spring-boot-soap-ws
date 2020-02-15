@@ -13,8 +13,6 @@ public class StandardSoapClient implements SoapClient {
     @Override
     public String firstRequest(PersonObjectClient person) {
 
-        System.out.println("      Client firstRequest");
-
         RequestToPDF requestToPDF = new RequestToPDF();
         requestToPDF.setName(person.getName());
         requestToPDF.setLastname(person.getLastname());
@@ -33,7 +31,6 @@ public class StandardSoapClient implements SoapClient {
 
     @Override
     public String secondRequest(PersonObjectClient person) {
-        System.out.println("      Client secondtRequest");
 
         RequestForPrint requestForPrint = new RequestForPrint();
         requestForPrint.setName(person.getName());
@@ -44,7 +41,6 @@ public class StandardSoapClient implements SoapClient {
         ResponseForPrint responseForPrint = new ResponseForPrint();
         try {
             responseForPrint = (ResponseForPrint) gateway.sendAndReceive(requestForPrint);
-            System.out.println("      Client secondtRequest try");
             responseForPrint.setMessage("        Client secondtRequest");
             return responseForPrint.getMessage();
         } catch (RuntimeException re) {
@@ -54,15 +50,13 @@ public class StandardSoapClient implements SoapClient {
 
     @Override
     public String thirdRequest(PersonObjectClient person) {
-        System.out.println("      Client thirdRequest");
-
+        
         RequestForDB requestForDB = new RequestForDB();
         requestForDB.setId(person.getId().toString());
 
         ResponseForDB responseForDB = new ResponseForDB();
         try {
             responseForDB = (ResponseForDB) gateway.sendAndReceive(requestForDB);
-            System.out.println("      Client thirdRequest try");
             responseForDB.setMessage("      Client thirdRequest");
             return responseForDB.getMessage();
         } catch (RuntimeException re) {

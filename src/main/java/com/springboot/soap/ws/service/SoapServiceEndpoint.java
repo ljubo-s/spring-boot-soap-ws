@@ -54,11 +54,10 @@ public class SoapServiceEndpoint {
             response.setMessage(result);
 
             loger.logResponse("handleFirstRequest", request, response);
-
             return response;
+            
         } catch (RuntimeException runtimeException) {
-//          response.setSuccess(false);
-//          return response;
+
             SoapServiceException fault = new SoapServiceException(ERROR_ON_FIRST_REQUEST);
             loger.logFault("handleFirstRequest", request, fault, runtimeException);
             throw fault;
@@ -78,8 +77,12 @@ public class SoapServiceEndpoint {
             response.setSuccess(true);
             response.setEmail(person.getEmail());
             response.setMessage(result);
+            
+            loger.logResponse("handleSecondRequest", request, response);
             return response;
+            
         } catch (RuntimeException runtimeException) {
+            
             SoapServiceException fault = new SoapServiceException(ERROR_ON_FIRST_REQUEST);
             loger.logFault("handleSecondRequest", request, fault, runtimeException);
             throw fault;
@@ -99,8 +102,11 @@ public class SoapServiceEndpoint {
             response.setSuccess(true);
             response.setEmail(person.getEmail());
             response.setName(result);
+            
+            loger.logResponse("handleThirdRequest", request, response);
             return response;
         } catch (RuntimeException runtimeException) {
+            
             SoapServiceException fault = new SoapServiceException(ERROR_ON_FIRST_REQUEST);
             loger.logFault("handleThirdRequest", request, fault, runtimeException);
             throw fault;

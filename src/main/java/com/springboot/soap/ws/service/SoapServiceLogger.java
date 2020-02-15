@@ -15,8 +15,12 @@ import com.springboot.soap.ws.repo.service.SoapRequestService;
 @Component
 public class SoapServiceLogger {
 
-    public static final int REQ_MAX_LENGTH = 1000;
+    public static final int REQUEST_MAX_LENGTH = 1000;
+    public static final int RESPONSE_MAX_LENGTH = 1000;
+
+    public static final int MESSAGE_MAX_LENGTH = 1000;
     public static final int TRACE_MAX_LENGTH = 4000;
+
     private Gson gson;
 
     @Autowired
@@ -31,9 +35,12 @@ public class SoapServiceLogger {
 
     public void logResponse(String methodName, Object request, Object response) {
         Date inTime = new Date(System.currentTimeMillis());
+
         String requestJSON = gson.toJson(request);
-        requestJSON = trim(requestJSON, REQ_MAX_LENGTH);
+        requestJSON = trim(requestJSON, REQUEST_MAX_LENGTH);
+
         String responseJSON = gson.toJson(response);
+        responseJSON = trim(responseJSON, RESPONSE_MAX_LENGTH);
 
         SoapRequest soapRequest = new SoapRequest();
         soapRequest.setMethodName(methodName);
@@ -46,15 +53,17 @@ public class SoapServiceLogger {
 
     public void logFault(String methodName, Object request, SoapServiceException fault, Throwable re) {
         Date inTime = new Date(System.currentTimeMillis());
+
         String requestJSON = gson.toJson(request);
-        requestJSON = trim(requestJSON, REQ_MAX_LENGTH);
-        String trace = traceAsString(fault, re);
-        trace = trim(trace, TRACE_MAX_LENGTH);
+        requestJSON = trim(requestJSON, REQUEST_MAX_LENGTH);
+
+        String traceJson = traceAsString(fault, re);
+        traceJson = trim(traceJson, TRACE_MAX_LENGTH);
 
         SoapFault soapFaults = new SoapFault();
         soapFaults.setFaultCode(fault.getCode());
         soapFaults.setFaultMessage(fault.getMessage());
-        soapFaults.setTraceData(trace);
+        soapFaults.setTraceData(traceJson);
         soapFaults.setLogDate(inTime);
 
         soapFaultService.saveOrUpdate(soapFaults);

@@ -20,7 +20,7 @@ CREATE TABLE soapfault
   id serial NOT NULL,
   fault_code character varying(2000),
   fault_message character varying(4000),
-  trace_date character varying(50),
+  trace_data character varying(50),
   log_date timestamp without time zone,
   CONSTRAINT soapfault_pkey PRIMARY KEY (id)
 );
