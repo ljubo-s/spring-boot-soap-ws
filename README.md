@@ -1,10 +1,11 @@
-# Spring Boot SOAP Web Services
+#  Spring Boot for SOAP Web Service Application
+## Use Spring Boot + JPA + Hibernate + PostgreSQL + Apache CXF in 
 
-##  Usage
+###  Usage
 -	Run the application and call web methods on http://localhost:8080/soapws/
 -	Use SoapUI or similar, Import wsdl from `src\main\resources\service\wsdl\SoapServiceWSDL.wsdl`
   
-##  Build and run
+###  Build and run
 ### Configurations
 Open the `application.properties` file and set your own configurations for the database connection.
 ####    Create database
